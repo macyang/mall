@@ -38,14 +38,18 @@ class Dot:
       return self.id
 
     def updatePosition(self):
+      factor = 0.6
+      half = factor / 2.0
       r = random()
+      rx = random() * factor
+      ry = random() * factor
       g = self.map.getGraph()
       # print 'update from ' + str(self.previous) + ' to ' + str(self.current)
       previousV = g.getVertex(self.previous)
       currentV = g.getVertex(self.current)
       if (self.previous == self.current):
-	self.x = currentV.getX() + r - 0.5
-	self.y = currentV.getY() + r - 0.5
+	self.x = currentV.getX() + rx - half
+	self.y = currentV.getY() + ry - half
       else:
 	previousX = previousV.getX()
 	previousY = previousV.getY()
@@ -53,19 +57,23 @@ class Dot:
 	currentY = currentV.getY()
 	if (currentX == previousX):
 	  # print 'currentX == previousX'
-	  self.x = currentX + r - 0.5
+	  self.x = currentX + rx - half
+	  # self.y = currentY + ry - half
 	  self.y = currentY + (previousY - currentY) * r
 	elif (currentY == previousY):
 	  # print 'currentY == previousY'
 	  self.x = currentX + (previousX - currentX) * r
-	  self.y = currentY + r - 0.5
+	  # self.x = currentX + rx - half
+	  self.y = currentY + ry - half
 	else:
 	  # print 'Neither'
 	  self.x = currentX + (previousX - currentX) * r
 	  self.y = currentY + (previousY - currentY) * r
+	  # self.x = currentX + rx - half
+	  # self.y = currentY + ry - half
 
 map = Map()
 d0 = Dot(map, 2, 0)
 for i in range(8):
   pos = d0.walk()
-  print str(d0.getId()) + ',' + str(i) + ',' +  str(pos[0]) + ',' + str(pos[1])
+  # print str(d0.getId()) + ',' + str(i) + ',' +  str(pos[0]) + ',' + str(pos[1])
